@@ -10,7 +10,7 @@ from pymodaq.utils.data import DataFromPlugins
 #  TODO:
 #  Replace the following fake import with the import of the real Python wrapper of your instrument. Here we suppose that
 #  the wrapper is in the hardware directory, but it could come from an external librairy like pylablib or pymeasure.
-from pymodaq_plugins_template.hardware.python_wrapper_file_of_your_instrument import PythonWrapperObjectOfYourInstrument
+from pymodaq_plugins_template.hardware import core
 
 # TODO:
 # (1) change the name of the following class to DAQ_1DViewer_TheNameOfYourChoice
@@ -20,7 +20,7 @@ from pymodaq_plugins_template.hardware.python_wrapper_file_of_your_instrument im
 #     pymodaq_plugins_my_plugin/daq_viewer_plugins/plugins_1D
 
 
-class DAQ_1DViewer_Template(DAQ_Viewer_base):
+class DAQ_1DViewer_FLCC3001(DAQ_Viewer_base):
     """ Instrument plugin class for a 1D viewer.
     
     This object inherits all functionalities to communicate with PyMoDAQ’s DAQ_Viewer module through inheritance via
