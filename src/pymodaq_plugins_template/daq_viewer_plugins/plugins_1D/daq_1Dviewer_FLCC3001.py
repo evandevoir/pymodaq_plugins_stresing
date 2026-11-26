@@ -8,8 +8,11 @@ from pymodaq.control_modules.viewer_utility_classes import DAQ_Viewer_base, como
 from pymodaq.utils.data import DataFromPlugins
 
 
-#  Here we suppose that the wrapper is in the hardware directory.
-from pymodaq_plugins_template.hardware import core
+#  Here we suppose that the wrapper is in the hardware/stresing directory.
+from pymodaq_plugins_template.hardware import stresing
+
+#Read the config.ini file given by Stresing. We assume it is in located in the hardware folder
+config = stresing.load_config_file("config.ini")
 
 class DAQ_1DViewer_FLCC3001(DAQ_Viewer_base):
     """ Instrument plugin class for a 1D viewer.
