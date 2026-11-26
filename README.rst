@@ -26,8 +26,8 @@ This branch targets **PyMoDAQ 5.3.x** (Python 3.11 to 3.14). Use the branch matc
 Authors
 =======
 
-* First Author  (myemail@xxx.org)
-* Other author (myotheremail@xxx.org)
+* Eliott Vandevoir  (eliott.vandevoir@ens-lyon.fr)
+
 
 .. if needed use this field
 
@@ -47,38 +47,10 @@ Instruments
 
 Below is the list of instruments included in this plugin
 
-Actuators
-+++++++++
-
-* **yyy**: control of yyy actuators
-* **xxx**: control of xxx actuators
-
-Viewer0D
-++++++++
-
-* **yyy**: control of yyy 0D detector
-* **xxx**: control of xxx 0D detector
-
 Viewer1D
 ++++++++
 
-* **yyy**: control of yyy 1D detector
-* **xxx**: control of xxx 1D detector
-
-
-Viewer2D
-++++++++
-
-* **yyy**: control of yyy 2D detector
-* **xxx**: control of xxx 2D detector
-
-
-PID Models
-==========
-
-
-Extensions
-==========
+* **FLCC3001**: control of FLCC3001 1D detector
 
 
 Installation instructions
