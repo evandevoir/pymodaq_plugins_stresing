@@ -55,6 +55,9 @@ build-backend = "hatchling.build"
 [tool.hatch.version]
 source = "vcs"
 
+[tool.hatch.build.targets.wheel]
+packages = ["pymodaq_plugins_stresing"]
+
 [tool.pymodaq]
 # the "Operating System" and "Programming Language :: Python :: 3.x" classifiers are added when building the package,
 # from supported_platforms in your instrument plugins and from requires-python
