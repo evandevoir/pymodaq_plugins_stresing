@@ -5,4 +5,4 @@ on: [push, pull_request]
 
 jobs:
   tests:
-    uses: PyMoDAQ/pymodaq_plugins_template/.github/workflows/reusable-tests.yml@5.3.x
+    uses: PyMoDAQ/pymodaq_plugins_template/.github/workflows/reusable-tests.yml@5.4.x
