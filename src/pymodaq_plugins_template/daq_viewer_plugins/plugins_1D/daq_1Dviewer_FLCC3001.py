@@ -104,33 +104,16 @@ class DAQ_1DViewer_FLCC3001(DAQ_Viewer_base):
         if self.is_master and self.controller is not None:
             self.controller.exit_driver()
 
-    def grab_data(self, Naverage=1, **kwargs):
+    def grab_data(self):
         """Start a grab from the detector
-
-        Parameters
-        ----------
-        Naverage: int
-            Number of hardware averaging (if hardware averaging is possible, self.hardware_averaging should be set to
-            True in class preamble and you should code this implementation)
-        kwargs: dict
-            others optionals arguments
         """
-        ## TODO for your custom plugin: you should choose EITHER the synchrone or the asynchrone version following
-
-        ##synchrone version (blocking function)
-        data_tot = self.controller.your_method_to_start_a_grab_snap()
-        self.dte_signal.emit(DataToExport('myplugin',
-                                          data=[DataFromPlugins(name='Mock1', data=data_tot,
-                                                                dim='Data1D', labels=['dat0', 'data1'],
-                                                                axes=[self.x_axis])]))
-
         ##asynchrone version (non-blocking function with callback)
-        self.controller.your_method_to_start_a_grab_snap(self.callback)
+        self.controller.start_measurement_nonblocking()
         #########################################################
 
     def callback(self):
         """optional asynchrone method called when the detector has finished its acquisition of data"""
-        data_tot = self.controller.your_method_to_get_data_from_buffer()
+        data_tot = self.controller.copy_all_data_2d(drvno=drvno)
         self.dte_signal.emit(DataToExport('myplugin',
                                           data=[DataFromPlugins(name='Mock1', data=data_tot,
                                                                 dim='Data1D', labels=['dat0', 'data1'])]))
@@ -138,7 +121,7 @@ class DAQ_1DViewer_FLCC3001(DAQ_Viewer_base):
     def stop(self):
         """Stop the current grab hardware wise if necessary"""
         self.controller.abort_measurement()
-        self.emit_status(ThreadCommand('Update_Status', ['Acquisition aborted']))
+        self.emit_status(ThreadCommand('Update_Status', ['Acquisition manually aborted']))
         ##############################
         return ''
 
