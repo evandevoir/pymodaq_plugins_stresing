@@ -86,7 +86,7 @@ class DAQ_1DViewer_FLCC3001(DAQ_Viewer_base):
         """
 
         # TODO for your custom plugin. Initialize viewers pannel with the future type of data
-        self.dte_signal_temp.emit(DataToExport(name='myplugin',
+        self.dte_signal_temp.emit(DataToExport(name='stresing',
                                                data=[DataFromPlugins(name='Mock1',
                                                                      data=[np.array([0., 0., ...]),
                                                                            np.array([0., 0., ...])],
@@ -98,13 +98,10 @@ class DAQ_1DViewer_FLCC3001(DAQ_Viewer_base):
 
     def close(self):
         """Terminate the communication protocol"""
-        ## TODO for your custom plugin
-        raise NotImplementedError  # when writing your own plugin remove this line
         # only the master owns the controller (a slave must not close the shared one) and ini_stage/ini_detector may
         # have failed before creating it, so close can be called while self.controller is still None
         if self.is_master and self.controller is not None:
-            #  self.controller.your_method_to_terminate_the_communication()  # when writing your own plugin replace this line
-            ...
+            self.controller.exit_driver()
 
     def grab_data(self, Naverage=1, **kwargs):
         """Start a grab from the detector
