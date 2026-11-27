@@ -6,17 +6,19 @@ h5exporters = false  # true if plugin contains custom h5 file exporters
 scanners = false  # true if plugin contains custom scan layout (daq_scan extensions)
 
 [urls]
-package-url = 'https://github.com/PyMoDAQ/pymodaq_plugins_template' #todo modify url by your plugin url
+package-url = 'https://github.com/evandevoir/pymodaq_plugins_stresing' #todo modify url by your plugin url
 
 [project]
-name = "pymodaq_plugins_template" #todo modify template by your plugin short name
-description = 'some word about your plugin'  #todo: one sentence naming the instrument(s) and what it does, shown on PyPI
+name = "pymodaq_plugins_stresing"
+description = 'Package for interacting with FLCC3001 Stresing camera.'
 keywords = [
     "pymodaq",
     "plugin",
     "instrument control",
     "data acquisition",
-    #todo: add the instrument, manufacturer and measurement type (camera, stage, spectrometer...)
+    "FLCC3001",
+    "Stresing",
+    "Camera"
 ]
 dependencies = [
     "pymodaq>=5.3.7",
@@ -27,12 +29,10 @@ dependencies = [
 ]
 
 authors = [
-    {name = "Name Surname", email = "myname@test.fr"},
-    #todo: list here all authors of your plugin
+    {name = "Eliott Vandevoir", email = "eliott.vandevoir@ens-lyon.fr"},
 ]
 maintainers = [
-    {name = "Name Surname", email = "myname@test.fr"},
-    #todo: list here all maintainers of your plugin
+    {name = "Eliott Vandevoir", email = "eliott.vandevoir@ens-lyon.fr"},
 ]
 
 # nottodo: leave everything below as is!
@@ -54,6 +54,9 @@ build-backend = "hatchling.build"
 
 [tool.hatch.version]
 source = "vcs"
+
+[tool.hatch.build.targets.wheel]
+packages = ["pymodaq_plugins_stresing"]
 
 [tool.pymodaq]
 # the "Operating System" and "Programming Language :: Python :: 3.x" classifiers are added when building the package,
