@@ -39,19 +39,20 @@ class DAQ_1DViewer_FLCC3001(DAQ_Viewer_base):
 
     """
     params = comon_parameters+[
-        ## TODO for your custom plugin
-        # elements to be added here as dicts in order to control your custom stage
-        ############
+        {'title': 'Acquisition Settings:', 'name': 'acq_settings', 'type': 'group', 'children': [
+
+                {'title': 'Number of samples:', 'name': 'nos', 'type': 'int', 'value': 2, 'default': 2, 'min': 2, 'max':4294967295},
+                {'title': 'Number of blocks:', 'name': 'nob', 'type': 'int', 'value': 1, 'default': 1, 'min': 1, 'max':4294967295},
+                {'title': 'Continuous measurment:', 'name': 'cont_meas', 'type': 'bool', 'value': False},
+                {'title': 'Pause between two acquisitions (us):', 'name': 'int', 'type': 'int', 'value': 0, 'default': 0, 'min': 0, 'max':4294967295},
+
+        ]}
         ]
 
     def ini_attributes(self):
-        #  TODO declare the type of the wrapper (and assign it to self.controller) you're going to use for easy
-        #  autocompletion
-        self.controller: PythonWrapperObjectOfYourInstrument = None
 
-        # TODO declare here attributes you want/need to init with a default value
-
-        self.x_axis = None
+        self.controller: stresing = None
+        super().ini_attributes()
 
     def ini_detector(self, controller=None):
         """Detector communication initialization
