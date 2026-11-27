@@ -82,15 +82,14 @@ class DAQ_1DViewer_FLCC3001(DAQ_Viewer_base):
 
         # get the x_axis (you may want to do this also in the commit settings if x_axis may have changed
         n_pixels = int(stresing.settings.camera_settings[drvno].pixel) #read in the file the pixel channel
-        n_pixels_per_cam = n_pixels//stresing.settings.camera_settings[drvno].camcnt #all cameras are counted in the PIXEL value
         data_x_axis = np.arange(n_pixels)
         self.x_axis = Axis(data=data_x_axis, label='Pixel', units='pixel', index=0)
 
 
         self.dte_signal_temp.emit(DataToExport(name='stresing',
                                                data=[DataFromPlugins(name='Cameras',
-                                                                     data=[np.zeros(n_pixels_per_cam),
-                                                                           np.zeros(n_pixels_per_cam)],
+                                                                     data=[np.zeros(n_pixels),
+                                                                           np.zeros(n_pixels)],
                                                                      dim='Data1D', labels=['Channel A', 'Channel B'],
                                                                      axes=[self.x_axis])]))
 
@@ -108,6 +107,7 @@ class DAQ_1DViewer_FLCC3001(DAQ_Viewer_base):
         """Start a grab from the detector
         """
         ##synchrone version (blocking function)
+        self.controller.init_measurement()
         self.controller.start_measurement_blocking()
         frame_buffer_2d = self.controller.copy_all_data_2d(drvno=drvno)
         avgA = np.mean([row for i, row in enumerate(frame_buffer_2d) if i % 2 == 0], axis=0) #Channel A
@@ -147,12 +147,13 @@ class DAQ_1DViewer_FLCC3001(DAQ_Viewer_base):
         param: Parameter
             A given parameter (within detector_settings) whose value has been changed by the user
         """
+        '''
         ## TODO for your custom plugin
         if param.name() == "a_parameter_you've_added_in_self.params":
            self.controller.your_method_to_apply_this_param_change()
 #        elif ...
         ##
-
+        '''
 
 if __name__ == '__main__':
     main(__file__)
