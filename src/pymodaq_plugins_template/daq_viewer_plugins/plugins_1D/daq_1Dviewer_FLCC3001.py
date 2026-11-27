@@ -52,6 +52,7 @@ class DAQ_1DViewer_FLCC3001(DAQ_Viewer_base):
     def ini_attributes(self):
 
         self.controller: stresing = None
+        self.x_axis = None
         super().ini_attributes()
 
     def ini_detector(self, controller=None):
@@ -70,19 +71,19 @@ class DAQ_1DViewer_FLCC3001(DAQ_Viewer_base):
             False if initialization failed otherwise True
         """
 
-        raise NotImplementedError  # TODO when writing your own plugin remove this line and modify the one below
         if self.is_master:
-            self.controller = PythonWrapperObjectOfYourInstrument()  #instantiate you driver with whatever arguments are needed
-            self.controller.open_communication() # call eventual methods
-            initialized = self.controller.a_method_or_atttribute_to_check_if_init()  # TODO
+            self.controller = stresing.init_driver()  #initiate the driver
+            initialized = isinstance(self.controller, int) and self.controller > 0 #True if at least one board is detected
         else:
             self.controller = controller
             initialized = True
 
+        """
         ## TODO for your custom plugin
-        # get the x_axis (you may want to to this also in the commit settings if x_axis may have changed
+        # get the x_axis (you may want to do this also in the commit settings if x_axis may have changed
         data_x_axis = self.controller.your_method_to_get_the_x_axis()  # if possible
         self.x_axis = Axis(data=data_x_axis, label='', units='', index=0)
+        """
 
         # TODO for your custom plugin. Initialize viewers pannel with the future type of data
         self.dte_signal_temp.emit(DataToExport(name='myplugin',
