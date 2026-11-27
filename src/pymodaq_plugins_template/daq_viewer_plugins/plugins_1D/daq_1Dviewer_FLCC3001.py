@@ -1,4 +1,5 @@
 import numpy as np
+from pathlib import Path
 
 from pymodaq_utils.utils import ThreadCommand
 from pymodaq_data.data import DataToExport, Axis
@@ -12,7 +13,8 @@ from pymodaq.utils.data import DataFromPlugins
 from pymodaq_plugins_template.hardware import stresing
 
 #Read the config.ini file given by Stresing. We assume it is in located in the hardware folder
-config = stresing.load_config_file("config.ini")
+config_path = Path(stresing.__file__).parent.parent / "config.ini"
+config = stresing.load_config_file(str(config_path))
 
 class DAQ_1DViewer_FLCC3001(DAQ_Viewer_base):
     """ Instrument plugin class for a 1D viewer.
