@@ -19,8 +19,7 @@ pymodaq_plugins_template
     :target: https://github.com/PyMoDAQ/pymodaq_plugins_template/actions/workflows/Test.yml
 
 
-Use this template to create a repository on your account and start the development of your own PyMoDAQ plugin!
-
+This template implements the Stresing camera FLCC3001 in pymodaq.
 This branch targets **PyMoDAQ 5.3.x** (Python 3.11 to 3.14). Use the branch matching your PyMoDAQ version.
 
 Authors
@@ -56,9 +55,10 @@ Viewer1D
 Installation instructions
 =========================
 
-* PyMoDAQ’s version.
+* PyMoDAQ’s version: 5.3.14
 * Operating system’s version.
-* What manufacturer’s drivers should be installed to make this plugin run?
+* Stresing python already contains all the files needed.
+* The config.ini file in src/pymodaq_plugins_stresing/hardware must be modified according to your setup.
 
 
 Development

@@ -10,7 +10,7 @@ from pymodaq.utils.data import DataFromPlugins
 
 
 #  Here we suppose that the wrapper is in the hardware/stresing directory.
-from pymodaq_plugins_template.hardware import stresing
+from pymodaq_plugins_stresing.hardware import stresing
 
 #Read the config.ini file given by Stresing. We assume it is in located in the hardware folder
 config_path = Path(stresing.__file__).parent.parent / "config.ini"
