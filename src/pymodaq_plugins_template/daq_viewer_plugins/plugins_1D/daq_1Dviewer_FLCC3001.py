@@ -15,6 +15,7 @@ from pymodaq_plugins_template.hardware import stresing
 #Read the config.ini file given by Stresing. We assume it is in located in the hardware folder
 config_path = Path(stresing.__file__).parent.parent / "config.ini"
 config = stresing.load_config_file(str(config_path))
+drvno = 0 #do not change that except is you have different PCIE board
 
 class DAQ_1DViewer_FLCC3001(DAQ_Viewer_base):
     """ Instrument plugin class for a 1D viewer.
@@ -78,22 +79,22 @@ class DAQ_1DViewer_FLCC3001(DAQ_Viewer_base):
             self.controller = controller
             initialized = True
 
-        """
-        ## TODO for your custom plugin
-        # get the x_axis (you may want to do this also in the commit settings if x_axis may have changed
-        data_x_axis = self.controller.your_method_to_get_the_x_axis()  # if possible
-        self.x_axis = Axis(data=data_x_axis, label='', units='', index=0)
-        """
 
-        # TODO for your custom plugin. Initialize viewers pannel with the future type of data
+        # get the x_axis (you may want to do this also in the commit settings if x_axis may have changed
+        n_pixels = int(stresing.settings.camera_settings[drvno].pixel) #read in the file the pixel channel
+        n_pixels_per_cam = n_pixels//2 #both camera are counted in the PIXEL value
+        data_x_axis = np.arange(n_pixels)
+        self.x_axis = Axis(data=data_x_axis, label='Pixel', units='pixel', index=0)
+
+
         self.dte_signal_temp.emit(DataToExport(name='stresing',
-                                               data=[DataFromPlugins(name='Mock1',
-                                                                     data=[np.array([0., 0., ...]),
-                                                                           np.array([0., 0., ...])],
-                                                                     dim='Data1D', labels=['Mock1', 'label2'],
+                                               data=[DataFromPlugins(name='Cameras',
+                                                                     data=[np.zeros(n_pixels_per_cam),
+                                                                           np.zeros(n_pixels_per_cam)],
+                                                                     dim='Data1D', labels=['Channel A', 'Channel B'],
                                                                      axes=[self.x_axis])]))
 
-        info = "Whatever info you want to log"
+        info = "Intialization of the cameras."
         return info, initialized
 
     def close(self):
@@ -136,10 +137,8 @@ class DAQ_1DViewer_FLCC3001(DAQ_Viewer_base):
 
     def stop(self):
         """Stop the current grab hardware wise if necessary"""
-        ## TODO for your custom plugin
-        raise NotImplementedError  # when writing your own plugin remove this line
-        self.controller.your_method_to_stop_acquisition()  # when writing your own plugin replace this line
-        self.emit_status(ThreadCommand('Update_Status', ['Some info you want to log']))
+        self.controller.abort_measurement()
+        self.emit_status(ThreadCommand('Update_Status', ['Acquisition aborted']))
         ##############################
         return ''
 
