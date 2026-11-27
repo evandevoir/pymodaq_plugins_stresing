@@ -82,7 +82,7 @@ class DAQ_1DViewer_FLCC3001(DAQ_Viewer_base):
 
         # get the x_axis (you may want to do this also in the commit settings if x_axis may have changed
         n_pixels = int(stresing.settings.camera_settings[drvno].pixel) #read in the file the pixel channel
-        n_pixels_per_cam = n_pixels//2 #both camera are counted in the PIXEL value
+        n_pixels_per_cam = n_pixels//stresing.settings.camera_settings[drvno].camcnt #all cameras are counted in the PIXEL value
         data_x_axis = np.arange(n_pixels)
         self.x_axis = Axis(data=data_x_axis, label='Pixel', units='pixel', index=0)
 
@@ -107,16 +107,30 @@ class DAQ_1DViewer_FLCC3001(DAQ_Viewer_base):
     def grab_data(self):
         """Start a grab from the detector
         """
+        ##synchrone version (blocking function)
+        self.controller.start_measurement_blocking()
+        frame_buffer_2d = self.controller.copy_all_data_2d(drvno=drvno)
+        avgA = np.mean([row for i, row in enumerate(frame_buffer_2d) if i % 2 == 0], axis=0) #Channel A
+        avgB = np.mean([row for i, row in enumerate(frame_buffer_2d) if i % 2 == 1], axis=0) #Channel B
+        data_tot = np.vstack((avgA, avgB))
+        self.dte_signal.emit(DataToExport('stresing',
+                                          data=[DataFromPlugins(name='Cameras', data=data_tot,
+                                                                dim='Data1D', labels=['Channel A', 'Channel B'],
+                                                                axes=[self.x_axis])]))
+
+        """
         ##asynchrone version (non-blocking function with callback)
         self.controller.start_measurement_nonblocking()
         #########################################################
-
+        """
+    '''    
     def callback(self):
         """optional asynchrone method called when the detector has finished its acquisition of data"""
         data_tot = self.controller.copy_all_data_2d(drvno=drvno)
         self.dte_signal.emit(DataToExport('myplugin',
                                           data=[DataFromPlugins(name='Mock1', data=data_tot,
                                                                 dim='Data1D', labels=['dat0', 'data1'])]))
+    '''
 
     def stop(self):
         """Stop the current grab hardware wise if necessary"""
